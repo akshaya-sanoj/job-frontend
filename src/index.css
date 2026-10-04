@@ -1,0 +1,86 @@
+@import "tailwindcss";
+@variant dark (&:where(.dark, .dark *));
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Bokor&family=Bonheur+Royale&family=Bungee+Tint&family=Cinzel:wght@400..900&family=Cookie&family=DM+Serif+Display:ital@0;1&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Eagle+Lake&family=Felipa&family=Honk:MORF@15&family=Kavoon&family=Kings&family=Libertinus+Math&family=Libre+Baskerville:ital,wght@0,400..700;1,400..700&family=Meddon&family=Montserrat:ital,wght@0,100..900;1,100..900&family=New+Rocker&family=Rouge+Script&family=Rubik+Doodle+Shadow&family=Rubik+Iso&family=Rubik+Puddles&family=Sekuya&family=Sirivennela&family=Tangerine:wght@400;700&display=swap');
+
+.r {
+  font-family: "Eagle Lake", serif;
+  font-weight: 900;
+  font-style: italic;
+  font-size: 25px;
+  color:thistle
+}
+
+.q {
+  font-family: "Eagle Lake", serif;
+  font-weight: 900;
+  font-style: italic;
+  font-size: 25px;
+}
+
+button {
+  font-family: "Eagle Lake", serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: 14px;
+}
+
+.c{
+  font-family: "Cinzel", serif;
+  font-optical-sizing: auto;
+  font-weight: 500px;
+  font-style: normal;
+}
+
+h1,h2{
+  font-family: "Felipa", serif;
+  font-weight: 800;
+  font-style: italic;
+  font-size: 25px;
+}
+h2{
+  font-family: "Felipa", serif;
+  font-weight: 800;
+  font-style: italic;
+  font-size: 22px;
+}
+
+h3{
+font-family: "Felipa", serif;
+  font-weight: 800;
+  font-style: italic;
+  font-size: 18px;
+}
+
+
+.k {
+  font-family: "Kavoon", serif;
+  font-weight: 700;
+  font-style: normal;
+}
+.k1 {
+  font-family: "Kavoon", serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: large;
+}
+
+
+.t {
+  font-family: "Felipa", serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.l {
+  font-family: "Libertinus Math", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+.i {
+  font-family: "Isometra", serif;
+  font-weight: 600;
+  font-style: bold;
+}
+
