@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import axios from 'axios';
+import api from '../api/axios'; // <-- USING THE NEW API INSTANCE
 import Navbar from '../components/Navbar';
 
 const CalendarView = ({ theme, toggleTheme }) => {
@@ -12,16 +12,15 @@ const CalendarView = ({ theme, toggleTheme }) => {
   useEffect(() => {
     const fetchApplications = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:5000/applications?userId=${user.id}`);
+        const { data } = await api.get(`/applications?userId=${user.id}`);
         setApplications(data);
       } catch (error) {
         console.error("Error fetching applications:", error);
       }
     };
-    fetchApplications();
-  }, [user.id]);
+    if (user?.id) fetchApplications();
+  }, [user?.id]);
 
-  // Use the exact hex colors for the dots
   const getStatusColor = (status) => {
     switch (status) {
       case 'Applied': return '#6D5A8D';
@@ -33,9 +32,17 @@ const CalendarView = ({ theme, toggleTheme }) => {
     }
   };
 
-  const tileContent = ({ date, view }) => {
+  // Helper function to safely format dates to YYYY-MM-DD in local time
+  const formatLocalDate = (d) => {
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
+  const tileContent = ({ date: tileDate, view }) => {
     if (view === 'month') {
-      const dateStr = date.toISOString().split('T')[0];
+      const dateStr = formatLocalDate(tileDate); // <-- FIXED TIMEZONE BUG
       const dayApps = applications.filter(app => 
         app.applicationDate === dateStr || app.interviewDate === dateStr
       );
@@ -58,7 +65,7 @@ const CalendarView = ({ theme, toggleTheme }) => {
     return null;
   };
 
-  const selectedDateStr = date.toISOString().split('T')[0];
+  const selectedDateStr = formatLocalDate(date); // <-- FIXED TIMEZONE BUG
   const activitiesOnSelectedDate = applications.filter(
     app => app.applicationDate === selectedDateStr || app.interviewDate === selectedDateStr
   );
@@ -70,7 +77,7 @@ const CalendarView = ({ theme, toggleTheme }) => {
       <main className="max-w-7xl mx-auto p-6 mt-6">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-[#111827] dark:text-[#F5F1E8]">Calendar</h1>
-          <p className="text-[#6B7280] dark:text-[#9CA3AF] mt-2 k">View your application and interview dates</p>
+          <p className="text-[#6B7280] dark:text-[#9CA3AF] mt-2">View your application and interview dates</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -98,7 +105,7 @@ const CalendarView = ({ theme, toggleTheme }) => {
           <div className="bg-[#FFFFFF] dark:bg-[#111827] p-6 rounded-xl shadow-sm border border-[#E5DED0] dark:border-[#263044] flex flex-col">
             <div className="flex items-center justify-center gap-2 mb-8">
               <span className="text-2xl">📅</span>
-              <h3 className="text-xl font-bold text-[#111827] dark:text-[#F5F1E8] t">
+              <h3 className="text-xl font-bold text-[#111827] dark:text-[#F5F1E8]">
                 Select a date
               </h3>
             </div>
@@ -122,7 +129,7 @@ const CalendarView = ({ theme, toggleTheme }) => {
                   <span className="text-2xl opacity-50">📅</span>
                 </div>
                 <h4 className="font-bold text-lg mb-2 text-[#111827] dark:text-[#F5F1E8]">No date selected</h4>
-                <p className="text-sm t">Click on any date to see applications and interviews</p>
+                <p className="text-sm">Click on any date to see applications and interviews</p>
               </div>
             )}
           </div>
