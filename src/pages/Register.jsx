@@ -32,7 +32,7 @@ const Register = ({ theme, toggleTheme }) => {
       
       // Auto-login and redirect
       sessionStorage.setItem('user', JSON.stringify(data));
-      navigate('/dashboard');
+      navigate('/login');
       
     } catch (err) {
       console.error("Registration error:", err);
