@@ -1,14 +1,24 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import gsap from 'gsap';
 import Footer from '../components/Footer';
 import { CiSun } from "react-icons/ci";
 
-
 const LandingPage = ({ theme = 'light', toggleTheme }) => {
+  const heroRef = useRef(null);
+
   useEffect(() => {
+    // Initialize AOS
     AOS.init({ duration: 800, once: true });
+
+    // GSAP Entrance Animation for Hero Content
+    gsap.fromTo(
+      heroRef.current,
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 1, ease: 'power3.out', delay: 0.2 }
+    );
   }, []);
 
   return (
@@ -25,11 +35,10 @@ const LandingPage = ({ theme = 'light', toggleTheme }) => {
               <path strokeLinecap="round" strokeLinejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
             </svg>
           </div>
-          <span className="text-2xl i uppercase font-bold tracking-tight">careerloom</span>
+          <span className="text-2xl uppercase font-bold tracking-tight">careerloom</span>
         </div>
         
         <div className="flex items-center gap-6 font-medium">
-          {/* NOTE: If this button is missing, you need to update App.jsx! */}
           {toggleTheme && (
             <button onClick={toggleTheme} className="text-xl p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
               {theme === 'dark' ? <CiSun className="text-yellow-400 text-2xl" /> : '🌙'}
@@ -45,8 +54,8 @@ const LandingPage = ({ theme = 'light', toggleTheme }) => {
       {/* Hero Section */}
       <main className="flex-1 max-w-7xl mx-auto px-6 pt-12 pb-24 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10 w-full">
         
-        {/* Left Column: Copy & CTAs */}
-        <div data-aos="fade-right">
+        {/* Left Column: Copy & CTAs (Animated with GSAP reference) */}
+        <div ref={heroRef}>
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#C9A45C] text-[#B18A42] dark:text-[#D4AF6A] text-sm font-semibold mb-8">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -166,13 +175,10 @@ const LandingPage = ({ theme = 'light', toggleTheme }) => {
             </div>
           </div>
 
-          {/* Floating Widget (Restored!) */}
-       
-
         </div>
       </main>
 
-      {/* Footer Included Here */}
+      {/* Footer */}
       <Footer />
 
     </div>
